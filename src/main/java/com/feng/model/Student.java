@@ -7,6 +7,7 @@ public class Student {
     private Integer age;
     private String number;
     private String tel;
+    private String image;
 
     public Integer getId() {
         return id;
@@ -54,5 +55,13 @@ public class Student {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

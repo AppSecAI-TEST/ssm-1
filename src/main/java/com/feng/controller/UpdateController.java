@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -23,15 +25,20 @@ public class UpdateController {
 
 
     @RequestMapping(value ="/add", method = {RequestMethod.POST})
-    public String add(Student student) { //接收一个Student对象作为参数，对象中的属性将会使用请求中同名的参数进行填充
-        updateService.addStudent(student);
+    public String add(String name, String gender, Integer age, String number, String tel, MultipartFile file) {
+        try {
+            String image = updateService.saveImage(file);
+            updateService.addStudent(name,gender,age,number,tel,image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return "redirect:/main";
     }
 
-
     @RequestMapping(value ="/updateStudentById", method = {RequestMethod.POST})
     public String updateStudentById(Model model,Integer id) { //如果表单中id为"",那么Controller方法参数中的id值为null
-        if (id!=null){
+        if (id != null){
             model.addAttribute("id", id);
             return "redirect:/updateStudent/{id}";
         }else return "updatePage";
@@ -49,8 +56,14 @@ public class UpdateController {
     }
 
     @RequestMapping(value ="/update", method = {RequestMethod.POST})
-    public String update(Student student) {
-        updateService.updateStudent(student);
+    public String update(Integer id, String name, String gender, Integer age, String number, String tel, MultipartFile file) {
+        try {
+            String image = updateService.saveImage(file);
+            updateService.updateStudent(id,name,gender,age,number,tel,image);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "redirect:/main";
     }
 
@@ -66,7 +79,7 @@ public class UpdateController {
     }
 
     @RequestMapping(value ="/search", method = {RequestMethod.POST})
-    public String search(Model model,Student student) {
+    public String search(Model model,Student student) { //接收Student对象作为参数，对象中的属性将会使用请求中同名的参数进行填充
         List<Student> searchList = updateService.findStudent(student);
         model.addAttribute("searchList",searchList);
         return "searchStudent";

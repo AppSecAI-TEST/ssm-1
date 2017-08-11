@@ -4,12 +4,12 @@
 <mapper namespace="com.feng.dao.UpdateDAO">
 
     <insert id="addStudent" >
-        insert into student (name,gender,age,number,tel)
-        values (#{name},#{gender},#{age},#{number},#{tel})
+        insert into student (name,gender,age,number,tel,image)
+        values (#{name},#{gender},#{age},#{number},#{tel},#{image})
     </insert>
 
     <update id="updateStudent" >
-        update student set name=#{name},gender=#{gender},age=#{age},number=#{number},tel=#{tel}
+        update student set name=#{name},gender=#{gender},age=#{age},number=#{number},tel=#{tel},image=#{image}
         where id=#{id}
     </update>
 

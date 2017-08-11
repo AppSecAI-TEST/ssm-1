@@ -11,7 +11,7 @@
 <%@ include file="header.jsp" %>
 
 	<div class="container">
-		<form class="form-horizontal" action="/add" method="post">
+		<form class="form-horizontal" action="/add" method="post" enctype="multipart/form-data">
 			<div class="page-header">
 				<h1>
 					新增学生信息
@@ -51,6 +51,13 @@
 						<input class="form-control" type="text" maxlength=30 name="tel" placeholder="请填写联系方式"  >
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">照片</label>
+					<div class="col-sm-8">
+						<input class="form-control" type="file" name="file"  onchange="PreviewImage(this)" required >
+						<br>
+					</div>
+				</div>
 				<br>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
@@ -59,7 +66,33 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-2" >
+				<img id="imgPreview" height="200">
+			</div>
 		</form>
 	</div>
+<script>
+	function PreviewImage(imgFile) {
+		var pattern = /\.jpg$|\.gif$|\.jpeg$|\.png$|\.JPG$|\.PNG$|\.JPEG$|\.GIF$/;
+		if (!pattern.test(imgFile.value)) {
+			alert("仅支持jpg/jpeg/png/gif格式的照片！");
+			imgFile.value = "";
+		}
+		else {
+			if (window.FileReader){
+				var reader = new FileReader();
+				var file = imgFile.files[0];
+				reader.readAsDataURL(file);
+				reader.onload = function (e) {
+					var pic = document.getElementById("imgPreview");
+					pic.src = this.result;
+				}
+			}
+			else {
+				alert("浏览器不支持图片预览，请升级")
+			}
+		}
+	}
+</script>
 </body>
 </html>

@@ -6,11 +6,11 @@ import com.feng.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 
@@ -37,6 +37,29 @@ public class HomeController {
         return "studentDetail";
     }
 
+    @RequestMapping(value = "/image", method = {RequestMethod.GET})
+    @ResponseBody
+    public void getImage(@RequestParam("name") String imageName,
+                         HttpServletResponse response) {
+        String path = "E:/image/";
+        response.setContentType("image/jpeg");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            FileInputStream in = new FileInputStream(path + imageName);
+            int i = in.available();
+            byte[] data = new byte[i];
+            in.read(data);
+            in.close();
+
+            OutputStream out = response.getOutputStream();
+            out.write(data);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @RequestMapping(value ="/addStudent", method = {RequestMethod.GET})
     public String addStudent() {

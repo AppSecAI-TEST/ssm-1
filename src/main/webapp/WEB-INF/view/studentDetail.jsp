@@ -8,34 +8,41 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <div class="container">
-    <h1>详情</h1>   <a class="btn btn-primary btn-lg" href="/updateStudent/${student.id}">修改 </a>
-    <table class="table table-bordered" >
-        <tr>
-            <th>编号</th>
-            <td>${student.id}</td>
-        </tr>
-        <tr>
-            <th>姓名</th>
-            <td>${student.name}</td>
-        </tr>
-        <tr>
-            <th>性别</th>
-            <td>${student.gender}</td>
-        </tr>
-        <tr>
-            <th>年龄</th>
-            <td>${student.age}</td>
-        </tr>
-        <tr>
-            <th>学号</th>
-            <td>${student.number} </td>
-        </tr>
-        <tr>
-            <th>联系方式</th>
-            <td>${student.tel} </td>
-        </tr>
-    </table>
+    <h1>详情</h1>
+    <div  class="col-md-12 column">
+        <img src="/image?name=${student.image}" height="200">
+        <br>
+        <br>
+    </div>
+    <div class="col-md-12 column">
+        <table class="table table-bordered">
+            <thead>
+            <tr >
+                <th>编号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>学号</th>
+                <th>联系方式</th>
+                <th>操作</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>${student.id}</td>
+                <td>${student.name}</td>
+                <td>${student.gender}</td>
+                <td>${student.age}</td>
+                <td>${student.number}</td>
+                <td>${student.tel}</td>
+                <td> <a class="btn btn-primary " href="/updateStudent/${student.id}">修改 </a></td>
+            </tr>
+        </table>
+    </div>
 </div>
+
 </body>
 </html>
